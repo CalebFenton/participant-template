@@ -11,6 +11,10 @@ $ErrorActionPreference = "stop"
 &"pip" install @(Get-ChildItem -Recurse -Filter *.whl)
 
 [System.Environment]::SetEnvironmentVariable('POLYSWARM_ENGINE', '{{ cookiecutter.engine_name_slug }}', 'machine')
+
+# Balancemanager also accepts a 'maximum' parameter
+nssm set balancemanager AppParameters "--minimum 10000000 --refill-amount 10000000"
+
 nssm install microengine c:\Python35\Scripts\microengine.exe """--backend {{ cookiecutter.package_slug }}"""
 nssm set microengine AppDirectory C:\{{ cookiecutter.engine_name }}
 nssm set microengine AppExit Default Restart
