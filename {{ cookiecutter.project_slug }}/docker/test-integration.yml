@@ -1,5 +1,17 @@
 version: '3.4'
 services:
+  balancemanager:
+    image: "polyswarm/polyswarm-client"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - KEYFILE=docker/microengine_keyfile
+      - PASSWORD=password
+    command:
+    - "balancemanager"
+    - "maintain"
+    - "100000000"
+    - "100000000"
+
   {% if cookiecutter.has_backend == "true" %}
   {{ cookiecutter.engine_name_slug }}backend:
     image: "{{ cookiecutter.project_slug }}-backend"
