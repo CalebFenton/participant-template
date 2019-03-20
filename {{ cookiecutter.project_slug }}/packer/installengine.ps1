@@ -16,8 +16,8 @@ $ErrorActionPreference = "stop"
 nssm set worker AppParameters "--log WARN"
 nssm set worker Start SERVICE_DEMAND_START
 
-# Balancemanager also accepts a 'maximum' parameter
-nssm set balancemanager AppParameters "--minimum 10000000 --refill-amount 10000000"
+# These two parameters are the 'minimum balance' and 'refill amount' that balancemanager will maintain.
+nssm set balancemanager AppParameters "10000000 10000000"
 
 nssm install microengine c:\Python35\Scripts\microengine.exe """--backend {{ cookiecutter.package_slug }}"""
 nssm set microengine AppDirectory C:\{{ cookiecutter.engine_name }}
