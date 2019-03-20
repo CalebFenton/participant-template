@@ -14,6 +14,7 @@ $ErrorActionPreference = "stop"
 
 # You can configure all polyswarm service's logging here
 nssm set worker AppParameters "--log WARN"
+nssm set worker Start SERVICE_DEMAND_START
 
 # Balancemanager also accepts a 'maximum' parameter
 nssm set balancemanager AppParameters "--minimum 10000000 --refill-amount 10000000"
