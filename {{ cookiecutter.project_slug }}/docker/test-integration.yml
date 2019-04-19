@@ -9,8 +9,11 @@ services:
     command:
     - "balancemanager"
     - "maintain"
-    - "100000000"
-    - "100000000"
+    - "%{cookiecutter.min_balance}"
+    - "%{cookiecutter.increment_balance}"
+  {% if cookiecutter.max_balance != "false" %}
+    - "%{cookiecutter.max_balance}"
+  {% endif %}
 
   {% if cookiecutter.has_backend == "true" %}
   {{ cookiecutter.engine_name_slug }}backend:

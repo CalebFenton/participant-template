@@ -7,6 +7,9 @@
   "package_slug": "{{ cookiecutter.author_org_slug }}_{{ cookiecutter.engine_name_slug }}",
   "author_name": "PolySwarm Developer",
   "author_email": "polyswarm_dev@example.com",
+  "min_balance": "100000000",
+  "increment_balance": "100000000",
+  "max_balance": "false",
   "platform": ["docker-linux", "windows"],
   "has_backend": ["false", "true"],
   "aws_account_for_ami": "001122334455"

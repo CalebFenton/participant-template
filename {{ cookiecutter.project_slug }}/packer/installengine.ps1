@@ -17,7 +17,13 @@ nssm set worker AppParameters "--log WARN"
 nssm set worker Start SERVICE_DEMAND_START
 
 # These two parameters are the 'minimum balance' and 'refill amount' that balancemanager will maintain.
-nssm set balancemanager AppParameters "10000000 10000000"
+nssm set balancemanager AppParameters "%{cookiecutter.min_balance}"
+nssm set balancemanager AppParameters "%{cookiecutter.increment_balance}"
+
+{% if cookiecutter.max_balance != "false" %}
+nssm set balancemanager AppParameters "%{cookiecutter.max_balance}"
+{% endif %}
+
 
 nssm install microengine c:\Python35\Scripts\microengine.exe """--backend {{ cookiecutter.package_slug }}"""
 nssm set microengine AppDirectory C:\{{ cookiecutter.engine_name }}
