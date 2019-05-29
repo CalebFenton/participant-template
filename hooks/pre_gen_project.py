@@ -11,6 +11,7 @@ author_org_slug = '{{ cookiecutter.author_org_slug }}'
 
 # Microengines only
 microengine__has_backend = '{{ cookiecutter.microengine__has_backend }}'
+microengine__has_worker = '{{ cookiecutter.microengine__has_worker }}'
 
 if participant_type not in ["microengine", "ambassador"]:
     print("ERROR {} is not a valid participant type".format(participant_type))
@@ -36,6 +37,12 @@ if participant_type == "microengine":
     if microengine__has_backend not in ["false", "true"]:
         print("ERROR {} is not a valid option for microengine__has_backend".format(microengine__has_backend))
         sys.exit(1)
+
+
+    if microengine__has_worker not in ["false", "true"]:
+        print("ERROR {} is not a valid option for microengine__has_worker".format(microengine__has_worker))
+        sys.exit(1)
+
 
 # Ambassadors only
 if participant_type == "ambassador":

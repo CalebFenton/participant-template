@@ -11,7 +11,11 @@ services:
   {% endif %}
  
   test_{{ cookiecutter.participant_name_slug }}:
+    {% if cookiecutter.microengine__has_worker == "true" %}
+    image: "polyswarm/polyswarm-client"
+    {% else %}
     image: "{{ cookiecutter.project_slug }}"
+    {% endif %}
     {% if cookiecutter.participant_type == "microengine" %}
     {% if cookiecutter.microengine__has_backend == "true" %}
     depends_on:
@@ -38,8 +42,35 @@ services:
       - "10"
       - "--chains"
       - "side"
+    {% if cookiecutter.microengine__has_worker == "true" %}
+      - "--backend"
+      - "producer"
+    {% else %}
       - "--backend"
       - "{{ cookiecutter.package_slug }}"
+    {% endif %}
+
+ {% if cookiecutter.microengine__has_worker == "true" %}
+  test_{{ cookiecutter.participant_name_slug }}_worker:
+    image: "{{ cookiecutter.project_slug }}"
+    depends_on:
+      - "test_{{ cookiecutter.project_slug }}"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command:
+      - "dockerize"
+      - "-wait"
+      - "tcp://polyswarmd:31337"
+      - "-timeout"
+      - "1000s"
+      - "worker"
+      - "--log"
+      - "info"
+      - "--redis_addr"
+      - "redis:6379"
+      - "--backend"
+      - "{{ cookiecutter.package_slug }}"
+  {% endif %}
 
   test_deposit-{{ cookiecutter.participant_name_slug }}:
     image: "polyswarm/polyswarm-client"
